@@ -19,23 +19,32 @@ const envOrigins = (process.env.CLIENT_URL || "")
 
 const allowedOrigins = [
   "http://localhost:5173",
+  "https://portfolio-frontend-wine-mu.vercel.app", // hardcoded fallback in case CLIENT_URL env var is missing/wrong on Vercel
   ...envOrigins,
 ];
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // allow requests with no origin (like mobile apps, curl, Postman)
-      if (!origin || allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-      // don't throw - just deny, and log it so it's visible in Vercel's function logs
-      console.warn(`CORS blocked request from origin: ${origin}`);
-      return callback(null, false);
-    },
-    credentials: true,
-  })
-);
+// Debug log on cold start - check Vercel function logs to confirm this is correct
+console.log("Allowed CORS origins:", allowedOrigins);
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps, curl, Postman)
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    // log so it's visible in Vercel's function logs when something gets blocked
+    console.warn(`CORS blocked request from origin: "${origin}"`);
+    return callback(new Error("Not allowed by CORS"));
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
+
+// Explicitly handle preflight requests for all routes
+app.options("*", cors(corsOptions));
 
 app.use(express.json());
 
