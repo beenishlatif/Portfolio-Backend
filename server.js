@@ -11,9 +11,15 @@ connectDB();
 const app = express();
 
 // --- CORS setup (important for Vercel: frontend and backend are separate deployments) ---
-const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
+const envOrigins = (process.env.CLIENT_URL || "")
   .split(",")
-  .map((url) => url.trim());
+  .map((url) => url.trim())
+  .filter(Boolean);
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  ...envOrigins,
+];
 
 app.use(
   cors({
