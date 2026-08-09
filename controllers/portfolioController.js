@@ -40,16 +40,23 @@ export const getMyPortfolio = async (req, res) => {
 // @route PUT /api/portfolio/me   (PROTECTED - full or partial update)
 export const updateMyPortfolio = async (req, res) => {
   try {
-    const allowedFields = [
-      "hero",
-      "about",
-      "skills",
-      "projects",
-      "experience",
-      "education",
-      "contact",
-      "defaultTheme",
-    ];
+   const allowedFields = [
+  "hero",
+  "about",
+  "skills",
+  "projects",
+  "experience",
+  "education",
+  "contact",
+  "defaultTheme",
+  "techStack",
+  "services",
+  "whyChooseMe",
+  "process",
+  "github",
+  "currentFocus",
+  "testimonials",
+];
 
     const updates = {};
     for (const field of allowedFields) {
