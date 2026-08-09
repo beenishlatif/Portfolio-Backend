@@ -20,10 +20,11 @@ app.use(
     origin: function (origin, callback) {
       // allow requests with no origin (like mobile apps, curl, Postman)
       if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
+        return callback(null, true);
       }
+      // don't throw - just deny, and log it so it's visible in Vercel's function logs
+      console.warn(`CORS blocked request from origin: ${origin}`);
+      return callback(null, false);
     },
     credentials: true,
   })
