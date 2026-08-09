@@ -4,28 +4,47 @@ const portfolioSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, unique: true },
 
-   hero: {
-  title: { type: String, default: "" },
-  subtitle: { type: String, default: "" },
-  tagline: { type: String, default: "" },
-  resumeLink: { type: String, default: "" },
-  profileImage: { type: String, default: "" },
-  roles: [{ type: String }],                 // NEW - typewriter rotating roles
-  location: { type: String, default: "" },   // NEW
-  yearsOfExperience: { type: Number, default: 0 }, // NEW
-  availableForWork: { type: Boolean, default: true }, // NEW
-  stats: [                                     // NEW
-    {
-      label: { type: String, default: "" },
-      value: { type: String, default: "" },
+    hero: {
+      title: { type: String, default: "" },
+      subtitle: { type: String, default: "" },
+      tagline: { type: String, default: "" },
+      resumeLink: { type: String, default: "" },
+      githubLink: { type: String, default: "" }, // NEW - prominent GitHub button in hero
+      profileImage: { type: String, default: "" },
+      roles: [{ type: String }],
+      location: { type: String, default: "" },
+      yearsOfExperience: { type: Number, default: 0 },
+      availableForWork: { type: Boolean, default: true },
+      stats: [
+        {
+          label: { type: String, default: "" },
+          value: { type: String, default: "" },
+        },
+      ],
+      services: [
+        // NEW - folded in from old standalone "Services" section
+        {
+          title: { type: String, default: "" },
+          description: { type: String, default: "" },
+        },
+      ],
+      whyChooseMe: [
+        // NEW - folded in from old standalone "Why Choose Me" section
+        {
+          title: { type: String, default: "" },
+          description: { type: String, default: "" },
+        },
+      ],
     },
-  ],
-},
+
     about: {
       bio: { type: String, default: "" },
       image: { type: String, default: "" },
       highlights: [{ type: String }],
+      approach: { type: String, default: "" }, // NEW - longer "how I work" paragraph
     },
+
+    techStack: [{ type: String }],
 
     skills: [
       {
@@ -41,6 +60,8 @@ const portfolioSchema = new mongoose.Schema(
         description: { type: String, default: "" },
         techStack: [{ type: String }],
         image: { type: String, default: "" },
+        screenshots: [{ type: String }], // NEW - gallery
+        video: { type: String, default: "" }, // NEW - demo video URL
         liveLink: { type: String, default: "" },
         githubLink: { type: String, default: "" },
         featured: { type: Boolean, default: false },
@@ -51,16 +72,21 @@ const portfolioSchema = new mongoose.Schema(
       {
         company: { type: String, required: true },
         role: { type: String, required: true },
+        location: { type: String, default: "" }, // NEW
         duration: { type: String, default: "" },
+        current: { type: Boolean, default: false }, // NEW - "currently working here"
         description: { type: String, default: "" },
+        achievements: [{ type: String }], // NEW - bullet points
       },
     ],
 
     education: [
       {
-        institute: { type: String, required: true },
+        university: { type: String, required: true }, // NEW name (was "institute")
         degree: { type: String, default: "" },
+        fieldOfStudy: { type: String, default: "" }, // NEW
         duration: { type: String, default: "" },
+        gpa: { type: String, default: "" }, // NEW
         description: { type: String, default: "" },
       },
     ],

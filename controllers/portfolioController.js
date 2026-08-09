@@ -40,23 +40,19 @@ export const getMyPortfolio = async (req, res) => {
 // @route PUT /api/portfolio/me   (PROTECTED - full or partial update)
 export const updateMyPortfolio = async (req, res) => {
   try {
-   const allowedFields = [
-  "hero",
-  "about",
-  "skills",
-  "projects",
-  "experience",
-  "education",
-  "contact",
-  "defaultTheme",
-  "techStack",
-  "services",
-  "whyChooseMe",
-  "process",
-  "github",
-  "currentFocus",
-  "testimonials",
-];
+    // NOTE: services/whyChooseMe/githubLink now live INSIDE "hero", so they no
+    // longer need their own top-level fields. process/github/currentFocus/testimonials removed.
+    const allowedFields = [
+      "hero",
+      "about",
+      "skills",
+      "projects",
+      "experience",
+      "education",
+      "contact",
+      "defaultTheme",
+      "techStack",
+    ];
 
     const updates = {};
     for (const field of allowedFields) {
