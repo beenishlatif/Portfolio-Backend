@@ -9,7 +9,7 @@ const portfolioSchema = new mongoose.Schema(
       subtitle: { type: String, default: "" },
       tagline: { type: String, default: "" },
       resumeLink: { type: String, default: "" },
-      githubLink: { type: String, default: "" }, // NEW - prominent GitHub button in hero
+      githubLink: { type: String, default: "" }, // prominent GitHub button in hero
       profileImage: { type: String, default: "" },
       roles: [{ type: String }],
       location: { type: String, default: "" },
@@ -22,14 +22,12 @@ const portfolioSchema = new mongoose.Schema(
         },
       ],
       services: [
-        // NEW - folded in from old standalone "Services" section
         {
           title: { type: String, default: "" },
           description: { type: String, default: "" },
         },
       ],
       whyChooseMe: [
-        // NEW - folded in from old standalone "Why Choose Me" section
         {
           title: { type: String, default: "" },
           description: { type: String, default: "" },
@@ -41,7 +39,7 @@ const portfolioSchema = new mongoose.Schema(
       bio: { type: String, default: "" },
       image: { type: String, default: "" },
       highlights: [{ type: String }],
-      approach: { type: String, default: "" }, // NEW - longer "how I work" paragraph
+      approach: { type: String, default: "" },
     },
 
     techStack: [{ type: String }],
@@ -59,9 +57,21 @@ const portfolioSchema = new mongoose.Schema(
         title: { type: String, required: true },
         description: { type: String, default: "" },
         techStack: [{ type: String }],
-        image: { type: String, default: "" },
-        screenshots: [{ type: String }], // NEW - gallery
-        video: { type: String, default: "" }, // NEW - demo video URL
+        // Gallery of screenshots picked from the admin's device gallery.
+        // Each screenshot can carry its own short description. The FIRST
+        // screenshot in this array is used as the project's cover image
+        // on the public portfolio - there is no separate cover image field.
+        screenshots: [
+          {
+            url: { type: String, required: true },
+            caption: { type: String, default: "" },
+          },
+        ],
+        // Single demo video (also picked from gallery) with its own caption.
+        video: {
+          url: { type: String, default: "" },
+          caption: { type: String, default: "" },
+        },
         liveLink: { type: String, default: "" },
         githubLink: { type: String, default: "" },
         featured: { type: Boolean, default: false },
@@ -72,21 +82,21 @@ const portfolioSchema = new mongoose.Schema(
       {
         company: { type: String, required: true },
         role: { type: String, required: true },
-        location: { type: String, default: "" }, // NEW
+        location: { type: String, default: "" },
         duration: { type: String, default: "" },
-        current: { type: Boolean, default: false }, // NEW - "currently working here"
+        current: { type: Boolean, default: false },
         description: { type: String, default: "" },
-        achievements: [{ type: String }], // NEW - bullet points
+        achievements: [{ type: String }],
       },
     ],
 
     education: [
       {
-        university: { type: String, required: true }, // NEW name (was "institute")
+        university: { type: String, required: true },
         degree: { type: String, default: "" },
-        fieldOfStudy: { type: String, default: "" }, // NEW
+        fieldOfStudy: { type: String, default: "" },
         duration: { type: String, default: "" },
-        gpa: { type: String, default: "" }, // NEW
+        gpa: { type: String, default: "" },
         description: { type: String, default: "" },
       },
     ],
