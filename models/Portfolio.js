@@ -4,14 +4,23 @@ const portfolioSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, unique: true },
 
-    hero: {
-      title: { type: String, default: "" },
-      subtitle: { type: String, default: "" },
-      tagline: { type: String, default: "" },
-      resumeLink: { type: String, default: "" },
-      profileImage: { type: String, default: "" },
+   hero: {
+  title: { type: String, default: "" },
+  subtitle: { type: String, default: "" },
+  tagline: { type: String, default: "" },
+  resumeLink: { type: String, default: "" },
+  profileImage: { type: String, default: "" },
+  roles: [{ type: String }],                 // NEW - typewriter rotating roles
+  location: { type: String, default: "" },   // NEW
+  yearsOfExperience: { type: Number, default: 0 }, // NEW
+  availableForWork: { type: Boolean, default: true }, // NEW
+  stats: [                                     // NEW
+    {
+      label: { type: String, default: "" },
+      value: { type: String, default: "" },
     },
-
+  ],
+},
     about: {
       bio: { type: String, default: "" },
       image: { type: String, default: "" },
