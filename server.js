@@ -43,8 +43,12 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// Explicitly handle preflight requests for all routes
-app.options("*", cors(corsOptions));
+// NOTE: Removed the explicit `app.options("*", cors(corsOptions))` line.
+// The cors middleware above already handles OPTIONS preflight requests automatically
+// when used via app.use(). The bare "*" wildcard route was crashing on newer
+// Express/path-to-regexp versions on Vercel, which caused the function to fail
+// BEFORE any CORS headers could be set — that's what was showing up as a
+// "No Access-Control-Allow-Origin header" error in the browser.
 
 app.use(express.json());
 
